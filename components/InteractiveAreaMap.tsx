@@ -1,146 +1,138 @@
 
 import React, { useEffect, useRef } from 'react';
+import { Icons } from './Icons';
 
 declare global {
   interface Window {
-    google: any;
-    initMap: () => void;
+    L: any;
   }
 }
 
 export const InteractiveAreaMap: React.FC = () => {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const googleMap = useRef<any>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
+
+  const handleZoomIn = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.zoomIn();
+    }
+  };
+
+  const handleZoomOut = () => {
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.zoomOut();
+    }
+  };
 
   useEffect(() => {
-    const loadGoogleMaps = () => {
-      if (window.google && window.google.maps) {
-        initializeMap();
-        return;
+    if (!mapContainerRef.current || !window.L) return;
+
+    // Center on Toulouse
+    const toulouse: [number, number] = [43.6047, 1.4442];
+    const tarbes: [number, number] = [43.2333, 0.0833];
+    const montauban: [number, number] = [44.0167, 1.35];
+
+    // Detect theme
+    const isDarkMode = document.documentElement.classList.contains('dark');
+
+    // Initialize Map
+    mapInstanceRef.current = window.L.map(mapContainerRef.current, {
+      center: toulouse,
+      zoom: 8,
+      zoomControl: false,
+      scrollWheelZoom: false,
+      dragging: !window.L.Browser.mobile,
+      tap: !window.L.Browser.mobile,
+      attributionControl: false
+    });
+
+    // Tiles selection based on theme
+    const tileUrl = isDarkMode 
+      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+      : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+
+    window.L.tileLayer(tileUrl, {
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(mapInstanceRef.current);
+
+    // Custom Marker Icon
+    const customIcon = window.L.divIcon({
+      className: 'custom-div-icon',
+      html: `<div class="w-4 h-4 bg-accent border-2 border-white dark:border-neutral-900 rounded-full shadow-lg pulse-marker"></div>`,
+      iconSize: [16, 16],
+      iconAnchor: [8, 8]
+    });
+
+    // Add Markers
+    window.L.marker(tarbes, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">TM BTP Tarbes</b>');
+    window.L.marker(montauban, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">TM BTP Montauban</b>');
+
+    // Service Area Circle
+    window.L.circle(toulouse, {
+      color: '#C9A227',
+      fillColor: '#C9A227',
+      fillOpacity: 0.1,
+      radius: 85000, // 85km radius
+      weight: 2,
+      dashArray: '5, 10'
+    }).addTo(mapInstanceRef.current);
+
+    // Style for marker pulse
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .pulse-marker {
+        box-shadow: 0 0 0 rgba(201, 162, 39, 0.4);
+        animation: pulse 2s infinite;
       }
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(201, 162, 39, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0); }
+      }
+      .leaflet-popup-content-wrapper {
+        border-radius: 12px;
+        padding: 4px;
+      }
+    `;
+    document.head.appendChild(style);
 
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.API_KEY}&callback=initMap`;
-      script.async = true;
-      script.defer = true;
-      window.initMap = initializeMap;
-      document.head.appendChild(script);
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+      if (style.parentNode) document.head.removeChild(style);
     };
-
-    const initializeMap = () => {
-      if (!mapRef.current) return;
-
-      const toulouse = { lat: 43.6047, lng: 1.4442 };
-      const tarbes = { lat: 43.2333, lng: 0.0833 };
-      const montauban = { lat: 44.0167, lng: 1.35 };
-
-      const isDarkMode = document.documentElement.classList.contains('dark');
-      
-      const mapStyles = isDarkMode ? [
-        { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-        { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-        { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-        {
-          featureType: "administrative.locality",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#d59563" }],
-        },
-        {
-          featureType: "poi",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#d59563" }],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry",
-          stylers: [{ color: "#38414e" }],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry.stroke",
-          stylers: [{ color: "#212a37" }],
-        },
-        {
-          featureType: "road",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#9ca5b3" }],
-        },
-        {
-          featureType: "water",
-          elementType: "geometry",
-          stylers: [{ color: "#17263c" }],
-        },
-      ] : [];
-
-      googleMap.current = new window.google.maps.Map(mapRef.current, {
-        center: toulouse,
-        zoom: 8.5,
-        styles: mapStyles,
-        disableDefaultUI: true,
-        zoomControl: true,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: true,
-      });
-
-      // Add Markers
-      new window.google.maps.Marker({
-        position: tarbes,
-        map: googleMap.current,
-        title: "TM BTP - Tarbes",
-        icon: {
-          path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-          scale: 6,
-          fillColor: "#C9A227",
-          fillOpacity: 1,
-          strokeWeight: 2,
-          strokeColor: "#FFFFFF",
-        }
-      });
-
-      new window.google.maps.Marker({
-        position: montauban,
-        map: googleMap.current,
-        title: "TM BTP - Montauban",
-        icon: {
-          path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-          scale: 6,
-          fillColor: "#C9A227",
-          fillOpacity: 1,
-          strokeWeight: 2,
-          strokeColor: "#FFFFFF",
-        }
-      });
-
-      // Draw a line/area between the key cities to show the corridor
-      const flightPath = new window.google.maps.Polyline({
-        path: [tarbes, montauban],
-        geodesic: true,
-        strokeColor: "#C9A227",
-        strokeOpacity: 0.5,
-        strokeWeight: 3,
-        icons: [{
-          icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 4 },
-          offset: '0',
-          repeat: '20px'
-        }],
-      });
-      flightPath.setMap(googleMap.current);
-    };
-
-    loadGoogleMaps();
   }, []);
 
   return (
-    <div className="w-full h-[300px] md:h-[400px] bg-neutral-200 dark:bg-neutral-800 relative overflow-hidden rounded-2xl shadow-inner border border-gray-200 dark:border-neutral-700">
-      <div ref={mapRef} className="w-full h-full" />
+    <div className="w-full h-[300px] md:h-[350px] bg-neutral-100 dark:bg-neutral-800 relative overflow-hidden rounded-xl border border-gray-200 dark:border-neutral-800 shadow-inner group">
+      <div ref={mapContainerRef} className="w-full h-full z-0" />
       
-      {/* Floating Info Overlay */}
-      <div className="absolute top-4 left-4 z-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-3 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-xl pointer-events-none">
-        <h3 className="text-primary dark:text-white font-display font-bold text-sm">Zone Sud-Ouest</h3>
-        <div className="flex items-center gap-2 mt-1">
+      {/* Custom Zoom Controls */}
+      <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
+        <button 
+          onClick={handleZoomIn}
+          className="w-10 h-10 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md rounded-xl border border-gray-200 dark:border-neutral-700 shadow-lg flex items-center justify-center text-primary dark:text-white hover:text-accent dark:hover:text-accent transition-all active:scale-90"
+          aria-label="Zoom avant"
+        >
+          <Icons.Plus size={20} strokeWidth={2.5} />
+        </button>
+        <button 
+          onClick={handleZoomOut}
+          className="w-10 h-10 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md rounded-xl border border-gray-200 dark:border-neutral-700 shadow-lg flex items-center justify-center text-primary dark:text-white hover:text-accent dark:hover:text-accent transition-all active:scale-90"
+          aria-label="Zoom arrière"
+        >
+          <Icons.Minus size={20} strokeWidth={2.5} />
+        </button>
+      </div>
+
+      {/* Indicator Overlay */}
+      <div className="absolute bottom-4 left-4 z-[1000] pointer-events-none">
+        <div className="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-gray-200 dark:border-neutral-700 shadow-lg flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-            <span className="text-gray-500 dark:text-gray-400 text-[10px] font-bold uppercase tracking-wider">Tarbes — Montauban</span>
+            <span className="text-[10px] font-bold text-primary dark:text-white uppercase tracking-wider">Zone Sud-Ouest : Rayon 85km autour de Toulouse</span>
         </div>
       </div>
     </div>

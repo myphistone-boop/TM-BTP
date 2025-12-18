@@ -21,7 +21,9 @@ import {
   Moon,
   Thermometer,
   BarChart3,
-  Leaf
+  Leaf,
+  Plus,
+  Minus
 } from 'lucide-react';
 
 export const Icons = {
@@ -46,5 +48,7 @@ export const Icons = {
   Moon: Moon,
   Thermometer: Thermometer,
   Chart: BarChart3,
-  Eco: Leaf
+  Eco: Leaf,
+  Plus: Plus,
+  Minus: Minus
 };

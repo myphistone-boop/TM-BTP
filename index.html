@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <script>
       // Force light mode by default on first arrival
       if (localStorage.theme === 'dark') {
@@ -82,6 +88,10 @@
         background: rgba(17, 24, 39, 0.9);
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
+      /* Clean Leaflet Branding */
+      .leaflet-control-attribution { font-size: 8px !important; opacity: 0.5; }
+      .leaflet-container { font-family: 'Inter', sans-serif; background: #f3f4f6; }
+      .dark .leaflet-container { background: #0a0f1a; }
     </style>
     <script type="importmap">
 {

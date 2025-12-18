@@ -48,14 +48,14 @@ export const Home: React.FC = () => {
       <HeroBlueprint />
       
       {/* Services Section */}
-      <section className="py-12 md:py-20 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
+      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-accent text-[10px] md:text-sm font-bold tracking-[0.2em] uppercase mb-2 md:mb-4">Nos Expertises</h2>
-          <h3 className="font-display font-bold text-2xl md:text-4xl text-primary dark:text-white mb-8 md:mb-12">
+          <h3 className="font-display font-bold text-2xl md:text-4xl text-primary dark:text-white mb-6 md:mb-10">
             Une exécution technique premium
           </h3>
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
             {services.map(service => (
               <div key={service.id} className="h-full">
                 <ServiceCard service={service} />
@@ -66,9 +66,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-12 md:py-20 bg-white dark:bg-neutral-900 relative transition-colors duration-300">
+      <section className="py-10 md:py-16 bg-white dark:bg-neutral-900 relative transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
              <div className="relative group order-first lg:order-none">
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-neutral-800">
                   <img 
@@ -119,15 +119,15 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Quote Section */}
-      <section className="py-12 md:py-20 bg-white dark:bg-neutral-900 transition-colors duration-300" id="devis">
+      <section className="py-10 md:py-16 bg-white dark:bg-neutral-900 transition-colors duration-300" id="devis">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div>
               <h2 className="font-display font-bold text-2xl md:text-4xl text-primary dark:text-white mb-4 md:mb-6 leading-tight">
                 Lancez votre projet <br/>
                 <span className="text-accent">en toute sérénité</span>
               </h2>
-              <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-8 md:mb-10">
+              <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8">
                 Estimation gratuite et rendez-vous technique sous 48h.
               </p>
               <div className="space-y-4 md:space-y-6 bg-neutral-50 dark:bg-neutral-800 p-6 md:p-8 rounded-2xl border dark:border-neutral-700">
@@ -146,13 +146,20 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Map Section - More Compact */}
-      <section className="py-8 md:py-12 bg-neutral-900 overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 text-center text-white">
-          <h2 className="font-display font-bold text-xl md:text-2xl mb-6 md:mb-8">Zone d'Intervention</h2>
-          <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+      {/* Compact Map Section */}
+      <section className="py-6 md:py-10 bg-neutral-50 dark:bg-neutral-950 overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="inline-block mb-4">
+             <h2 className="font-display font-bold text-lg md:text-xl text-primary dark:text-white flex items-center justify-center gap-2">
+                <Icons.Location className="w-4 h-4 text-accent" />
+                Zone d'Intervention
+             </h2>
+             <div className="w-12 h-1 bg-accent mx-auto mt-1 rounded-full"></div>
+          </div>
+          <div className="rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-neutral-800">
             <InteractiveAreaMap />
           </div>
+          <p className="mt-4 text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Interventions prioritaires : Tarbes — Toulouse — Montauban</p>
         </div>
       </section>
     </div>
