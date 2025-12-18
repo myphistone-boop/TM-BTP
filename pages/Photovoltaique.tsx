@@ -122,7 +122,7 @@ export const Photovoltaique: React.FC = () => {
               <div className="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6">1</div>
               <h3 className="font-bold text-xl text-primary dark:text-white mb-3">Panneaux Full Black</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Esthétique irréprochable. Intégration discrète sur toiture tuile ou ardoise. Technologie monocristalline haut rendement (>400Wc).
+                Esthétique irréprochable. Intégration discrète sur toiture tuile ou ardoise. Technologie monocristalline haut rendement ({" > "}400Wc).
               </p>
             </div>
             <div className="bg-white dark:bg-neutral-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-neutral-700 hover:shadow-md transition-all">

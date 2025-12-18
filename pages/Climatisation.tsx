@@ -146,7 +146,7 @@ export const Climatisation: React.FC = () => {
             </div>
             <div className="h-12 w-px bg-white/20 hidden md:block"></div>
             <div className="text-center md:text-right">
-                <div className="text-accent font-bold text-3xl mb-1">COP &gt; 4</div>
+                <div className="text-accent font-bold text-3xl mb-1">COP {" > "} 4</div>
                 <p className="text-xs text-gray-400 uppercase tracking-widest">Coefficient de Performance</p>
             </div>
         </div>
