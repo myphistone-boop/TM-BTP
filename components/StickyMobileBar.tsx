@@ -7,7 +7,7 @@ export const StickyMobileBar: React.FC = () => {
   const whatsappUrl = `https://wa.me/${COMPANY_INFO.phoneClean.replace('+', '')}?text=${encodeURIComponent(message)}`;
 
   return (
-    <div className="md:hidden fixed bottom-6 right-6 z-40">
+    <div className="md:hidden fixed bottom-6 right-6 z-[40]">
       <a 
         href={whatsappUrl}
         target="_blank"

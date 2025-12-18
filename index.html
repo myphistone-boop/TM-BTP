@@ -4,13 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <title>TM BTP | Construction & Rénovation Premium</title>
-    <meta name="description" content="Expert en construction de maison neuve et rénovation complète à Tarbes et Montauban. Prestations haut de gamme, maîtrise de chantier." />
+    <meta name="description" content="Expert en construction de maison neuve et rénovation complète à Tarbes et Montauban. Prestations haut de gamme." />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <script>
-      // Initialize theme
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark')
       } else {
@@ -26,9 +25,9 @@
               display: ['Sora', 'sans-serif'],
             },
             colors: {
-              primary: '#0B2A5B', // Deep Navy
+              primary: '#0B2A5B',
               secondary: '#1A3C75',
-              accent: '#C9A227', // Gold
+              accent: '#C9A227',
               'accent-light': '#EBC348',
               neutral: {
                 50: '#F9FAFB',
@@ -62,26 +61,11 @@
       }
     </script>
     <style>
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #F3F4F6;
-      }
-      .dark ::-webkit-scrollbar-track {
-        background: #1F2937;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #CBD5E1;
-        border-radius: 4px;
-      }
-      .dark ::-webkit-scrollbar-thumb {
-        background: #4B5563;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94A3B8;
-      }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #F3F4F6; }
+      .dark ::-webkit-scrollbar-track { background: #1F2937; }
+      ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+      .dark ::-webkit-scrollbar-thumb { background: #4B5563; }
       
       .glass-panel {
         background: rgba(255, 255, 255, 0.9);
@@ -93,27 +77,23 @@
         background: rgba(17, 24, 39, 0.9);
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
-      
-      .text-gradient-gold {
-        background: linear-gradient(135deg, #C9A227 0%, #F4D03F 50%, #C9A227 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react",
+    "react-router-dom": "https://esm.sh/react-router-dom@7.0.1?external=react",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.10.1"
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
-</head>
-  <body class="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-gray-100 antialiased overflow-x-hidden selection:bg-accent selection:text-white transition-colors duration-300">
+  </head>
+  <body class="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-gray-100 antialiased overflow-x-hidden transition-colors duration-300">
     <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>

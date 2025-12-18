@@ -17,17 +17,12 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
+    if (theme === 'dark') root.classList.add('dark');
+    else root.classList.remove('dark');
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
-  };
+  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,45 +33,34 @@ export const Navbar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (isMobileMenuOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
   }, [isMobileMenuOpen]);
 
   const navLinks = [
     { name: 'Accueil', path: '/' },
     { name: 'Maison Neuve', path: '/maison-neuve' },
     { name: 'Rénovation', path: '/renovation' },
-    { name: 'Photovoltaïque', path: '/photovoltaique' },
+    { name: 'Solaire', path: '/photovoltaique' },
     { name: 'Climatisation', path: '/climatisation' },
     { name: 'Réalisations', path: '/realisations' },
   ];
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
-  // Background change is instant (no transition on bg-color) while padding/shadow are smooth
-  const navbarBgClass = isScrolled || isMobileMenuOpen
-    ? 'bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md shadow-md' 
-    : 'bg-transparent';
-  
-  const navbarPaddingClass = isScrolled ? 'py-3' : 'py-6';
+  // Background is immediate, shadow and padding are animated
+  const navbarClasses = isScrolled || isMobileMenuOpen
+    ? 'bg-white dark:bg-neutral-900 shadow-md py-3' 
+    : 'bg-transparent py-6';
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-[padding,box-shadow] duration-300 ease-in-out ${navbarBgClass} ${navbarPaddingClass}`}
-    >
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-[padding,box-shadow] duration-300 ${navbarClasses}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <Link to="/" className="group" onClick={closeMenu}>
             <div className="flex flex-col">
-              <span className="font-display font-bold text-2xl tracking-tight text-primary dark:text-white">
-                TM BTP
-              </span>
-              <span className="text-[10px] tracking-[0.2em] text-accent uppercase font-medium">
-                Expertise Premium
-              </span>
+              <span className="font-display font-bold text-2xl tracking-tight text-primary dark:text-white">TM BTP</span>
+              <span className="text-[10px] tracking-[0.2em] text-accent uppercase font-medium">Expertise Premium</span>
             </div>
           </Link>
 
@@ -85,9 +69,9 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium tracking-wide hover:text-accent transition-colors relative py-1
-                  ${location.pathname === link.path ? 'text-accent' : 'text-primary dark:text-gray-300'}
-                `}
+                className={`text-sm font-medium hover:text-accent transition-colors relative py-1 ${
+                  location.pathname === link.path ? 'text-accent' : 'text-primary dark:text-gray-300'
+                }`}
               >
                 {link.name}
                 {location.pathname === link.path && (
@@ -95,19 +79,10 @@ export const Navbar: React.FC = () => {
                 )}
               </Link>
             ))}
-            
-            <button 
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-primary dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label="Mode Sombre"
-            >
+            <button onClick={toggleTheme} className="p-2 text-primary dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-full transition-colors">
               {theme === 'dark' ? <Icons.Sun size={20} /> : <Icons.Moon size={20} />}
             </button>
-
-            <Link 
-              to="/devis"
-              className="px-5 py-2.5 bg-primary dark:bg-accent text-white dark:text-primary text-xs font-bold uppercase tracking-wider rounded-full hover:scale-105 transition-transform shadow-lg"
-            >
+            <Link to="/devis" className="px-5 py-2.5 bg-primary dark:bg-accent text-white dark:text-primary text-xs font-bold uppercase rounded-full shadow-lg hover:scale-105 transition-transform">
               Devis
             </Link>
           </div>
@@ -123,19 +98,21 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Fullscreen Mobile Menu */}
       <div className={`fixed inset-0 bg-white dark:bg-neutral-950 z-[60] transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden flex flex-col`}>
         <div className="flex items-center justify-between px-6 py-4 border-b dark:border-neutral-800">
           <span className="font-display font-bold text-2xl text-primary dark:text-white">TM BTP</span>
-          <button onClick={closeMenu} className="p-2 rounded-full bg-gray-100 dark:bg-neutral-800"><Icons.Close size={24} /></button>
+          <button onClick={closeMenu} className="p-2 rounded-full bg-gray-100 dark:bg-neutral-800 text-primary dark:text-white">
+            <Icons.Close size={24} />
+          </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-white dark:bg-neutral-950">
           {navLinks.map((link) => (
             <Link key={link.path} to={link.path} onClick={closeMenu} className="block text-2xl font-display font-bold text-primary dark:text-white border-b dark:border-neutral-800 pb-4">
               {link.name}
             </Link>
           ))}
-          <Link to="/devis" onClick={closeMenu} className="block w-full py-4 bg-primary dark:bg-accent text-white dark:text-primary text-center font-bold rounded-xl">
+          <Link to="/devis" onClick={closeMenu} className="block w-full py-5 bg-primary dark:bg-accent text-white dark:text-primary text-center font-bold rounded-xl shadow-xl mt-8">
             Demander un devis
           </Link>
         </div>
