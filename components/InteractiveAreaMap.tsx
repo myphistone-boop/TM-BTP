@@ -1,110 +1,146 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Icons } from './Icons';
+
+import React, { useEffect, useRef } from 'react';
+
+declare global {
+  interface Window {
+    google: any;
+    initMap: () => void;
+  }
+}
 
 export const InteractiveAreaMap: React.FC = () => {
-  const [scale, setScale] = useState(1);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const googleMap = useRef<any>(null);
 
-  const handleZoomIn = () => setScale(prev => Math.min(prev + 0.5, 4));
-  const handleZoomOut = () => setScale(prev => Math.max(prev - 0.5, 1));
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      });
-    }
-  };
-
-  const handleMouseUp = () => setIsDragging(false);
-
-  // Reset position if zoomed out completely
   useEffect(() => {
-    if (scale === 1) setPosition({ x: 0, y: 0 });
-  }, [scale]);
+    const loadGoogleMaps = () => {
+      if (window.google && window.google.maps) {
+        initializeMap();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.API_KEY}&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      window.initMap = initializeMap;
+      document.head.appendChild(script);
+    };
+
+    const initializeMap = () => {
+      if (!mapRef.current) return;
+
+      const toulouse = { lat: 43.6047, lng: 1.4442 };
+      const tarbes = { lat: 43.2333, lng: 0.0833 };
+      const montauban = { lat: 44.0167, lng: 1.35 };
+
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      
+      const mapStyles = isDarkMode ? [
+        { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+        { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+        { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+        {
+          featureType: "administrative.locality",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#d59563" }],
+        },
+        {
+          featureType: "poi",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#d59563" }],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry",
+          stylers: [{ color: "#38414e" }],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry.stroke",
+          stylers: [{ color: "#212a37" }],
+        },
+        {
+          featureType: "road",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#9ca5b3" }],
+        },
+        {
+          featureType: "water",
+          elementType: "geometry",
+          stylers: [{ color: "#17263c" }],
+        },
+      ] : [];
+
+      googleMap.current = new window.google.maps.Map(mapRef.current, {
+        center: toulouse,
+        zoom: 8.5,
+        styles: mapStyles,
+        disableDefaultUI: true,
+        zoomControl: true,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: true,
+      });
+
+      // Add Markers
+      new window.google.maps.Marker({
+        position: tarbes,
+        map: googleMap.current,
+        title: "TM BTP - Tarbes",
+        icon: {
+          path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+          scale: 6,
+          fillColor: "#C9A227",
+          fillOpacity: 1,
+          strokeWeight: 2,
+          strokeColor: "#FFFFFF",
+        }
+      });
+
+      new window.google.maps.Marker({
+        position: montauban,
+        map: googleMap.current,
+        title: "TM BTP - Montauban",
+        icon: {
+          path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+          scale: 6,
+          fillColor: "#C9A227",
+          fillOpacity: 1,
+          strokeWeight: 2,
+          strokeColor: "#FFFFFF",
+        }
+      });
+
+      // Draw a line/area between the key cities to show the corridor
+      const flightPath = new window.google.maps.Polyline({
+        path: [tarbes, montauban],
+        geodesic: true,
+        strokeColor: "#C9A227",
+        strokeOpacity: 0.5,
+        strokeWeight: 3,
+        icons: [{
+          icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 4 },
+          offset: '0',
+          repeat: '20px'
+        }],
+      });
+      flightPath.setMap(googleMap.current);
+    };
+
+    loadGoogleMaps();
+  }, []);
 
   return (
-    <div className="w-full h-[600px] bg-neutral-800 relative overflow-hidden group cursor-move select-none rounded-2xl">
-      {/* UI Controls */}
-      <div className="absolute top-6 left-6 z-20 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-gray-200 shadow-xl text-left">
-        <h3 className="text-primary font-display font-bold text-lg">Zone d'intervention</h3>
-        <p className="text-gray-500 text-xs mt-1">Sud-Ouest (Occitanie)</p>
-        <div className="flex items-center gap-2 mt-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="text-accent text-xs font-bold uppercase tracking-wider">Zone Active</span>
-        </div>
-      </div>
-
-      <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-2">
-        <button onClick={handleZoomIn} className="p-3 bg-white text-primary rounded-full hover:bg-accent hover:text-white transition-colors shadow-lg border border-gray-200">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14"/></svg>
-        </button>
-        <button onClick={handleZoomOut} className="p-3 bg-white text-primary rounded-full hover:bg-accent hover:text-white transition-colors shadow-lg border border-gray-200">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14"/></svg>
-        </button>
-      </div>
-
-      {/* Map Container */}
-      <div 
-        ref={containerRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        className="w-full h-full flex items-center justify-center transition-transform duration-100 ease-out"
-        style={{ 
-          transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)` 
-        }}
-      >
-        <div className="relative w-[1000px] h-[800px] bg-[#e5e7eb]">
-            {/* Map Image Background - Map of Occitanie Region */}
-            <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Occitanie_region_location_map.svg/1200px-Occitanie_region_location_map.svg.png" 
-                alt="Carte Occitanie Sud Ouest" 
-                className="absolute inset-0 w-full h-full object-cover opacity-80 grayscale-[0.3] hover:grayscale-0 transition-all duration-500"
-                draggable={false}
-            />
-            <div className="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
-
-            {/* Pins overlaying the map - Adjusted for Occitanie geography */}
-            {/* Tarbes is roughly South West (Hautes-Pyrénées) */}
-            {/* Montauban is roughly North East of Tarbes (Tarn-et-Garonne) */}
-            
-            {/* Zone Highlight Line */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-                <line x1="360" y1="620" x2="520" y2="440" stroke="#C9A227" strokeWidth="3" strokeDasharray="5,5" className="opacity-80" />
-             </svg>
-
-            {/* Pin Tarbes (Approx coordinates on this specific map projection) */}
-            <div className="absolute top-[620px] left-[360px] transform -translate-x-1/2 -translate-y-full group cursor-pointer z-10">
-                <div className="relative">
-                    <div className="w-4 h-4 bg-accent rounded-full animate-ping absolute top-1 left-1 opacity-75"></div>
-                    <Icons.Location className="w-8 h-8 text-primary drop-shadow-md relative z-10 fill-white" />
-                </div>
-                <div className="bg-white px-3 py-1 rounded shadow-lg mt-1 whitespace-nowrap border border-gray-200">
-                    <span className="font-bold text-primary text-sm">Tarbes</span>
-                </div>
-            </div>
-
-            {/* Pin Montauban (Approx coordinates on this specific map projection) */}
-             <div className="absolute top-[440px] left-[520px] transform -translate-x-1/2 -translate-y-full group cursor-pointer z-10">
-                <div className="relative">
-                     <Icons.Location className="w-8 h-8 text-primary drop-shadow-md relative z-10 fill-white" />
-                </div>
-                <div className="bg-white px-3 py-1 rounded shadow-lg mt-1 whitespace-nowrap border border-gray-200">
-                    <span className="font-bold text-primary text-sm">Montauban</span>
-                </div>
-            </div>
-
+    <div className="w-full h-[300px] md:h-[400px] bg-neutral-200 dark:bg-neutral-800 relative overflow-hidden rounded-2xl shadow-inner border border-gray-200 dark:border-neutral-700">
+      <div ref={mapRef} className="w-full h-full" />
+      
+      {/* Floating Info Overlay */}
+      <div className="absolute top-4 left-4 z-10 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md p-3 rounded-xl border border-gray-200 dark:border-neutral-700 shadow-xl pointer-events-none">
+        <h3 className="text-primary dark:text-white font-display font-bold text-sm">Zone Sud-Ouest</h3>
+        <div className="flex items-center gap-2 mt-1">
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+            <span className="text-gray-500 dark:text-gray-400 text-[10px] font-bold uppercase tracking-wider">Tarbes — Montauban</span>
         </div>
       </div>
     </div>
