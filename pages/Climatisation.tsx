@@ -7,37 +7,37 @@ export const Climatisation: React.FC = () => {
   return (
     <div className="pt-20 bg-white dark:bg-neutral-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative h-[65vh] flex items-center bg-white overflow-hidden">
+      <section className="relative h-[55vh] sm:h-[65vh] flex items-center bg-white overflow-hidden">
         <div className="absolute inset-0 z-0">
            <img 
-            src="https://images.unsplash.com/photo-1590756254933-24193365df58?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
-            alt="Intérieur moderne climatisé" 
+            src="https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+            alt="Intérieur moderne climatisé et confortable" 
             className="w-full h-full object-cover"
           />
-           <div className="absolute inset-0 bg-neutral-900/40"></div>
+           <div className="absolute inset-0 bg-neutral-900/50 sm:bg-neutral-900/40"></div>
         </div>
         
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-                <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 border border-white/30 text-white text-sm font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
-                <Icons.Thermometer className="w-4 h-4 mr-2" />
+                <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/20 border border-white/30 text-white text-[10px] sm:text-sm font-bold uppercase tracking-wider mb-4 sm:mb-6 backdrop-blur-sm">
+                <Icons.Thermometer className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2" />
                 Confort Thermique
                 </div>
-                <h1 className="font-display font-bold text-4xl md:text-6xl text-white mb-6">
+                <h1 className="font-display font-bold text-3xl sm:text-5xl md:text-6xl text-white mb-4 sm:mb-6 leading-tight">
                 Chaud l'hiver. <br/>
                 <span className="text-accent">Frais l'été.</span>
                 </h1>
-                <p className="text-xl text-gray-100 mb-8 max-w-2xl leading-relaxed">
-                Installation de Pompes à Chaleur (PAC) Air/Air et Air/Eau. 
-                Alliez confort absolu et économies d'énergie grâce à des systèmes silencieux et performants.
+                <p className="text-base sm:text-xl text-gray-100 mb-6 sm:mb-8 max-w-2xl leading-relaxed">
+                Solutions de Pompes à Chaleur Air/Air et Air/Eau. 
+                Alliez confort et économies avec des systèmes haute performance.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                     <Link 
                         to="/devis" 
-                        className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-bold rounded-full hover:bg-accent hover:text-white transition-all shadow-xl"
+                        className="inline-flex items-center justify-center px-7 py-3.5 sm:px-8 sm:py-4 bg-white text-primary font-bold rounded-full hover:bg-accent hover:text-white transition-all shadow-xl text-sm sm:text-base"
                     >
                         Demander un devis
-                        <Icons.ArrowRight className="ml-2 w-5 h-5" />
+                        <Icons.ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                     </Link>
                 </div>
             </div>
@@ -94,8 +94,8 @@ export const Climatisation: React.FC = () => {
             <div className="bg-neutral-50 dark:bg-neutral-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-neutral-700 group hover:shadow-xl transition-all">
                 <div className="h-64 overflow-hidden relative">
                     <img 
-                        src="https://images.unsplash.com/photo-1585969622956-6f81eb040c74?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                        alt="Pompe à chaleur extérieure" 
+                        src="https://images.unsplash.com/photo-1542332213-31f87348057f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                        alt="Solution de chauffage par Pompe à Chaleur Air/Eau" 
                         className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">

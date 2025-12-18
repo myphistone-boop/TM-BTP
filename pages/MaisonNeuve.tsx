@@ -7,33 +7,34 @@ export const MaisonNeuve: React.FC = () => {
   return (
     <div className="pt-20 bg-white dark:bg-neutral-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center bg-primary overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-40">
+      <section className="relative h-[55vh] sm:h-[70vh] flex items-center bg-primary overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-40 sm:opacity-40">
            <img 
             src="https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
             alt="Chantier maison neuve" 
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent sm:via-primary/60 z-10"></div>
+        <div className="absolute inset-0 bg-black/30 sm:hidden z-10"></div> {/* Extra overlay for mobile readability */}
         
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl animate-float" style={{ animationDuration: '10s' }}>
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/20 border border-accent/30 text-accent-light text-sm font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
-              <Icons.HardHat className="w-4 h-4 mr-2" />
+            <div className="inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-accent/20 border border-accent/30 text-accent-light text-[10px] sm:text-sm font-bold uppercase tracking-wider mb-4 sm:mb-6 backdrop-blur-sm">
+              <Icons.HardHat className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2" />
               Construction Intégrale
             </div>
-            <h1 className="font-display font-bold text-5xl md:text-6xl text-white mb-6 leading-tight">
+            <h1 className="font-display font-bold text-3xl sm:text-5xl md:text-6xl text-white mb-4 sm:mb-6 leading-tight">
               Bâtir votre avenir <br/>
               <span className="text-accent">sur des bases solides.</span>
             </h1>
-            <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-              De l'étude de sol à la remise des clés. Une construction traditionnelle ou contemporaine, maîtrisée par un interlocuteur unique.
+            <p className="text-base sm:text-xl text-gray-200 mb-6 sm:mb-8 leading-relaxed max-w-2xl">
+              De l'étude de sol à la remise des clés. Une construction maîtrisée par un interlocuteur unique.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link 
                 to="/devis" 
-                className="px-8 py-4 bg-accent text-primary font-bold rounded-full hover:bg-white transition-all shadow-xl"
+                className="px-6 py-3.5 sm:px-8 sm:py-4 bg-accent text-primary font-bold rounded-full hover:bg-white transition-all shadow-xl text-center text-sm sm:text-base"
               >
                 Commencer mon projet
               </Link>

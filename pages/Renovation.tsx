@@ -8,31 +8,31 @@ export const Renovation: React.FC = () => {
   return (
     <div className="pt-20 bg-white dark:bg-neutral-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center bg-white overflow-hidden">
+      <section className="relative h-[50vh] sm:h-[60vh] flex items-center bg-white overflow-hidden">
         <div className="absolute inset-0 z-0">
            <img 
-            src="https://images.unsplash.com/photo-1574359411659-15573a21bc2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
-            alt="Rénovation intérieur" 
+            src="https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+            alt="Rénovation architecturale premium" 
             className="w-full h-full object-cover"
           />
-           <div className="absolute inset-0 bg-neutral-900/60"></div>
+           <div className="absolute inset-0 bg-neutral-900/60 sm:bg-neutral-900/50"></div>
         </div>
         
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="font-display font-bold text-4xl md:text-6xl text-white mb-6">
+            <h1 className="font-display font-bold text-3xl sm:text-5xl md:text-6xl text-white mb-4 sm:mb-6 leading-tight">
               Révélez le potentiel <br/>
               <span className="text-accent">de votre habitat</span>
             </h1>
-            <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-              Rénovation énergétique, redistribution des pièces, modernisation. 
-              Nous transformons l'ancien avec le confort du neuf, sans compromis.
+            <p className="text-base sm:text-xl text-gray-200 mb-6 sm:mb-8 max-w-2xl mx-auto">
+              Rénovation énergétique, redistribution et modernisation. 
+              L'ancien transformé avec le confort du neuf.
             </p>
              <Link 
                 to="/devis" 
-                className="inline-flex items-center px-8 py-4 bg-white text-primary font-bold rounded-full hover:bg-accent hover:text-white transition-all shadow-xl"
+                className="inline-flex items-center px-7 py-3.5 sm:px-8 sm:py-4 bg-white text-primary font-bold rounded-full hover:bg-accent hover:text-white transition-all shadow-xl text-sm sm:text-base"
               >
                 Demander un chiffrage
-                <Icons.ArrowRight className="ml-2 w-5 h-5" />
+                <Icons.ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
         </div>
       </section>
