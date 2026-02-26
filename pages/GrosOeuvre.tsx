@@ -8,7 +8,7 @@ export const GrosOeuvre: React.FC = () => {
   return (
     <div className="pt-20 bg-white dark:bg-neutral-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative h-[45vh] sm:h-[60vh] flex items-center bg-primary overflow-hidden">
+      <section className="relative min-h-[60vh] sm:h-[60vh] flex items-center bg-primary overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-40 sm:opacity-40">
            <img 
             src="https://storage.googleapis.com/novelec_assets/Serin_Plomberie/OIP.webp" 

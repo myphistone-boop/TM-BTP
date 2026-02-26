@@ -9,7 +9,7 @@ export const Interventions: React.FC = () => {
   return (
     <div className="pt-20 bg-white dark:bg-neutral-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative h-[40vh] sm:h-[50vh] flex items-center bg-white overflow-hidden">
+      <section className="relative min-h-[55vh] sm:h-[50vh] flex items-center bg-white overflow-hidden">
         <div className="absolute inset-0 z-0">
            <img 
             src="https://storage.googleapis.com/novelec_assets/Serin_Plomberie/istockphoto-1410436592-612x612.jpg" 

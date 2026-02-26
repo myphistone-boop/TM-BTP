@@ -32,6 +32,16 @@ export const QuoteWizard: React.FC = () => {
     { id: 'gros_oeuvre', title: 'Projet Gros Œuvre', icon: Icons.Hammer, desc: "Rénovation, salle de bain, chauffage" },
   ];
 
+  const majorTypes = [
+    { type: "Plomberie maison neuve", icon: Icons.Blueprint },
+    { type: "Mise en place piscine", icon: Icons.Droplet },
+    { type: "Rénovation salle de bain", icon: Icons.Droplet },
+    { type: "Chauffage central", icon: Icons.HVAC },
+    { type: "Réseaux extérieurs", icon: Icons.Settings },
+    { type: "Colonne montante", icon: Icons.Wrench },
+    { type: "Autre projet", icon: Icons.Plus },
+  ];
+
   const urgentTypes = [
     { type: "Fuite d'eau", icon: Icons.Droplet },
     { type: "Canalisation bouchée", icon: Icons.Settings },
@@ -99,11 +109,11 @@ export const QuoteWizard: React.FC = () => {
       {/* Progress Bar */}
       <div className="bg-gray-50 dark:bg-neutral-950 px-8 py-4 border-b border-gray-100 dark:border-neutral-800 flex justify-between items-center">
         <div className="flex space-x-2">
-          {[1, 2, 3, 4].map(i => (
-            <div key={i} className={`h-2 w-12 rounded-full transition-all ${step >= i ? 'bg-accent' : 'bg-gray-200 dark:bg-gray-700'}`} />
+          {[1, 2, 3, 4, 5].map(i => (
+            <div key={i} className={`h-2 w-10 rounded-full transition-all ${step >= i ? 'bg-accent' : 'bg-gray-200 dark:bg-gray-700'}`} />
           ))}
         </div>
-        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Étape {step} / 4</span>
+        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Étape {step} / 5</span>
       </div>
 
       <div className="p-8 md:p-12 min-h-[400px] flex flex-col">
@@ -136,6 +146,34 @@ export const QuoteWizard: React.FC = () => {
         )}
 
         {step === 2 && category === 'gros_oeuvre' && (
+          <div className="animate-fade-in">
+            <h2 className="text-2xl font-display font-bold text-primary dark:text-white mb-2">Quel type de projet ?</h2>
+            <p className="text-gray-500 dark:text-gray-400 mb-8">Sélectionnez la catégorie de travaux.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {majorTypes.map((mt) => (
+                <button
+                  key={mt.type}
+                  onClick={() => { updateField('projectType', mt.type); handleNext(); }}
+                  className={`p-4 rounded-xl border-2 text-left transition-all hover:shadow-md flex items-center ${
+                    formData.projectType === mt.type 
+                      ? 'border-accent bg-accent/5 dark:bg-accent/10' 
+                      : 'border-gray-100 dark:border-neutral-800 hover:border-accent/50 dark:hover:border-accent/50'
+                  }`}
+                >
+                  <div className={`p-2 rounded-lg mr-3 ${formData.projectType === mt.type ? 'bg-accent text-white' : 'bg-gray-100 dark:bg-neutral-800 text-gray-500 dark:text-gray-400'}`}>
+                    <mt.icon size={20} />
+                  </div>
+                  <span className="font-bold text-primary dark:text-white text-sm">{mt.type}</span>
+                </button>
+              ))}
+            </div>
+            <div className="mt-8 flex justify-start">
+              <button onClick={handleBack} className="px-6 py-3 text-gray-500 dark:text-gray-400 font-medium hover:text-primary dark:hover:text-white">Retour</button>
+            </div>
+          </div>
+        )}
+
+        {step === 3 && category === 'gros_oeuvre' && (
           <div className="animate-fade-in">
             <h2 className="text-2xl font-display font-bold text-primary dark:text-white mb-6">Détails du projet</h2>
             <div className="space-y-6">
@@ -280,7 +318,7 @@ export const QuoteWizard: React.FC = () => {
           </div>
         )}
 
-        {step === 3 && category === 'gros_oeuvre' && (
+        {step === 4 && category === 'gros_oeuvre' && (
           <div className="animate-fade-in">
             <h2 className="text-2xl font-display font-bold text-primary dark:text-white mb-6">Vos coordonnées</h2>
             <div className="grid grid-cols-1 gap-6">
@@ -337,6 +375,49 @@ export const QuoteWizard: React.FC = () => {
         )}
 
         {step === 4 && category === 'gros_oeuvre' && (
+          <div className="animate-fade-in text-center">
+            <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Icons.Check className="w-8 h-8 text-green-600 dark:text-green-400" />
+            </div>
+            <h2 className="text-2xl font-display font-bold text-primary dark:text-white mb-2">Tout est prêt !</h2>
+            <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md mx-auto">
+              Choisissez votre méthode préférée pour nous envoyer votre demande. Nous vous répondrons sous 24h ouvrées.
+            </p>
+
+            <div className="bg-gray-50 dark:bg-neutral-950 p-6 rounded-xl text-left mb-8 border border-gray-100 dark:border-neutral-800 max-w-lg mx-auto">
+              <h4 className="font-bold text-gray-900 dark:text-white mb-2">Résumé :</h4>
+              <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                <li><span className="font-medium">Type:</span> {formData.projectType}</li>
+                <li><span className="font-medium">Lieu:</span> {formData.location}</li>
+                <li><span className="font-medium">Client:</span> {formData.name}</li>
+              </ul>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              <a 
+                href={mailtoLink}
+                className="inline-flex items-center justify-center px-8 py-4 bg-primary dark:bg-neutral-800 text-white dark:text-white rounded-xl font-bold hover:bg-secondary dark:hover:bg-neutral-700 transition-all shadow-lg hover:shadow-xl"
+              >
+                <Icons.Mail className="mr-2 w-5 h-5" />
+                Envoyer par Email
+              </a>
+              <a 
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center px-8 py-4 bg-[#25D366] text-white rounded-xl font-bold hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl"
+              >
+                <Icons.Mobile className="mr-2 w-5 h-5" />
+                Via WhatsApp
+              </a>
+            </div>
+            <p className="mt-6 text-xs text-gray-400">
+              En cliquant, vous ouvrez votre application de messagerie avec le résumé pré-rempli.
+            </p>
+          </div>
+        )}
+
+        {step === 5 && category === 'gros_oeuvre' && (
           <div className="animate-fade-in text-center">
             <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
               <Icons.Check className="w-8 h-8 text-green-600 dark:text-green-400" />

@@ -54,7 +54,6 @@ const App: React.FC = () => {
           </Routes>
         </main>
         <Footer />
-        <StickyMobileBar />
       </div>
     </Router>
   );

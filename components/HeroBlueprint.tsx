@@ -5,7 +5,7 @@ import { COMPANY_INFO } from '../types';
 
 export const HeroBlueprint: React.FC = () => {
   return (
-    <section className="relative min-h-[50vh] md:min-h-[75vh] flex items-center overflow-hidden bg-white dark:bg-neutral-950 pt-16 md:pt-16 pb-6 md:pb-0 transition-colors duration-300">
+    <section className="relative min-h-[60vh] md:min-h-[75vh] flex items-center overflow-hidden bg-white dark:bg-neutral-950 pt-24 md:pt-16 pb-6 md:pb-0 transition-colors duration-300">
       
       {/* Background Technical Grid (Blueprint effect) */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.1]" 

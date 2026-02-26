@@ -32,10 +32,9 @@ export const InteractiveAreaMap: React.FC = () => {
     const montpellier: [number, number] = [43.6108, 3.8767];
     const beziers: [number, number] = [43.3442, 3.2158];
     const millau: [number, number] = [44.0983, 3.0783];
-    const laPezade: [number, number] = [43.92, 3.25];
 
-    // Detect theme
-    const isDarkMode = document.documentElement.classList.contains('dark');
+    // Detect theme - REMOVED: We want light mode only for the map
+    // const isDarkMode = document.documentElement.classList.contains('dark');
 
     // Initialize Map
     mapInstanceRef.current = window.L.map(mapContainerRef.current, {
@@ -43,15 +42,14 @@ export const InteractiveAreaMap: React.FC = () => {
       zoom: 9,
       zoomControl: false,
       scrollWheelZoom: false,
-      dragging: !window.L.Browser.mobile,
-      tap: !window.L.Browser.mobile,
+      dragging: true, // Enable dragging for all devices
+      tap: true,      // Enable tap for all devices
+      touchZoom: true, // Enable touch zoom
       attributionControl: false
     });
 
-    // Tiles selection based on theme
-    const tileUrl = isDarkMode 
-      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+    // Tiles selection - Force light mode
+    const tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
 
     window.L.tileLayer(tileUrl, {
       subdomains: 'abcd',
@@ -61,7 +59,7 @@ export const InteractiveAreaMap: React.FC = () => {
     // Custom Marker Icon
     const customIcon = window.L.divIcon({
       className: 'custom-div-icon',
-      html: `<div class="w-4 h-4 bg-accent border-2 border-white dark:border-neutral-900 rounded-full shadow-lg pulse-marker"></div>`,
+      html: `<div class="w-4 h-4 bg-accent border-2 border-white rounded-full shadow-lg pulse-marker"></div>`,
       iconSize: [16, 16],
       iconAnchor: [8, 8]
     });
@@ -70,7 +68,6 @@ export const InteractiveAreaMap: React.FC = () => {
     window.L.marker(montpellier, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">Montpellier</b>');
     window.L.marker(beziers, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">Béziers</b>');
     window.L.marker(millau, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">Millau</b>');
-    window.L.marker(laPezade, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">La Pezade (Limite)</b>');
 
     // Service Area Circle
     window.L.circle(center, {
@@ -111,21 +108,21 @@ export const InteractiveAreaMap: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-[300px] md:h-[350px] bg-neutral-100 dark:bg-neutral-800 relative overflow-hidden rounded-xl border border-gray-200 dark:border-neutral-800 shadow-inner group">
+    <div className="w-full h-[300px] md:h-[350px] bg-neutral-100 relative overflow-hidden rounded-xl border border-gray-200 shadow-inner group">
       <div ref={mapContainerRef} className="w-full h-full z-0" />
       
       {/* Custom Zoom Controls */}
       <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
         <button 
           onClick={handleZoomIn}
-          className="w-10 h-10 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md rounded-xl border border-gray-200 dark:border-neutral-700 shadow-lg flex items-center justify-center text-primary dark:text-white hover:text-accent dark:hover:text-accent transition-all active:scale-90"
+          className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg flex items-center justify-center text-primary hover:text-accent transition-all active:scale-90"
           aria-label="Zoom avant"
         >
           <Icons.Plus size={20} strokeWidth={2.5} />
         </button>
         <button 
           onClick={handleZoomOut}
-          className="w-10 h-10 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md rounded-xl border border-gray-200 dark:border-neutral-700 shadow-lg flex items-center justify-center text-primary dark:text-white hover:text-accent dark:hover:text-accent transition-all active:scale-90"
+          className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl border border-gray-200 shadow-lg flex items-center justify-center text-primary hover:text-accent transition-all active:scale-90"
           aria-label="Zoom arrière"
         >
           <Icons.Minus size={20} strokeWidth={2.5} />
@@ -134,9 +131,9 @@ export const InteractiveAreaMap: React.FC = () => {
 
       {/* Indicator Overlay */}
       <div className="absolute bottom-4 left-4 z-[1000] pointer-events-none">
-        <div className="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-gray-200 dark:border-neutral-700 shadow-lg flex items-center gap-2">
+        <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-gray-200 shadow-lg flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-            <span className="text-[10px] font-bold text-primary dark:text-white uppercase tracking-wider">Zone : Hérault (34) - Limite La Pezade</span>
+            <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Zone : Hérault (34)</span>
         </div>
       </div>
     </div>
