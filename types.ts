@@ -1,8 +1,8 @@
 export enum ProjectType {
-  NEW_BUILD = 'Maison Neuve',
-  RENOVATION = 'Rénovation Complète',
-  PHOTOVOLTAIC = 'Photovoltaïque',
-  HVAC = 'Climatisation / PAC'
+  PLUMBING = 'Plomberie Générale',
+  HEATING = 'Chauffage',
+  BATHROOM = 'Salle de Bain',
+  RENOVATION = 'Rénovation'
 }
 
 export interface Service {
@@ -36,11 +36,17 @@ export interface QuoteFormData {
 }
 
 export const COMPANY_INFO = {
-  name: "TM BTP",
-  owner: "Mathieu Touron",
-  phone: "+33 6 26 53 84 45",
-  phoneClean: "+33626538445",
-  email: "tmbtp.contact@gmail.com",
-  zone: "Tarbes — Montauban",
-  hours: "Lun-Jeu 10h-17h, Ven-Sam 8h-13h"
+  name: "SERIN Plomberie",
+  owner: "M. Serin",
+  phone: "06 14 76 62 36",
+  phoneClean: "0614766236",
+  email: "contact@serin-plomberie.fr",
+  zone: "Hérault (34) — Montpellier & alentours",
+  hours: "24h/24 & 7j/7",
+  logo: "https://storage.googleapis.com/novelec_assets/Serin_Plomberie/Logopng.png",
+  siret: "928 542 943 00024",
+  tva: "FR10928542943",
+  address: "13 RUE FRANCOIS MIREUR, 34070 MONTPELLIER",
+  legalName: "SERIN MORGAN",
+  status: "Entrepreneur individuel (Micro-entreprise)"
 };

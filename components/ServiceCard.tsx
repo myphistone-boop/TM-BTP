@@ -42,6 +42,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onClick }) =>
     }
   };
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpand = (e: React.MouseEvent) => {
+    if (window.innerWidth < 768) {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsExpanded(!isExpanded);
+    }
+  };
+
   // Default to NewBuild (Home) if icon key is not found
   const Icon = Icons[service.icon as keyof typeof Icons] || Icons.NewBuild;
 
@@ -57,7 +67,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onClick }) =>
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="w-full h-full bg-white dark:bg-neutral-900 rounded-2xl p-4 md:p-8 border border-gray-100 dark:border-neutral-800 shadow-lg relative overflow-hidden transition-all duration-200 ease-out group hover:border-accent/50 dark:hover:border-accent/50"
+          className={`w-full h-full bg-white dark:bg-neutral-900 rounded-2xl p-4 md:p-8 border border-gray-100 dark:border-neutral-800 shadow-lg relative overflow-hidden transition-all duration-200 ease-out group hover:border-accent/50 dark:hover:border-accent/50 ${isExpanded ? 'ring-2 ring-accent' : ''}`}
           style={{
             transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale(${isHovered ? 1.02 : 1})`,
             boxShadow: isHovered 
@@ -77,25 +87,36 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, onClick }) =>
 
             <h3 className="font-display font-bold text-sm md:text-xl text-primary dark:text-white mb-2 md:mb-3 leading-tight">{service.title}</h3>
             
-            <p className="hidden md:block text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
-              {service.description}
-            </p>
+            <div className={`${isExpanded ? 'block' : 'hidden md:block'} transition-all duration-300`}>
+              <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm leading-relaxed mb-4 md:mb-6 flex-grow">
+                {service.description}
+              </p>
 
-            <ul className="hidden md:block space-y-2 mb-8 w-full">
-              {service.features.slice(0, 3).map((feature, idx) => (
-                <li key={idx} className="flex items-center text-xs text-gray-500 dark:text-gray-500 font-medium">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent mr-2"></div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+              <ul className="space-y-2 mb-6 md:mb-8 w-full">
+                {service.features.slice(0, 3).map((feature, idx) => (
+                  <li key={idx} className="flex items-center text-[10px] md:text-xs text-gray-500 dark:text-gray-500 font-medium">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent mr-2"></div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <div 
-              className="flex items-center text-xs md:text-sm font-bold text-primary dark:text-accent group-hover:text-accent dark:group-hover:text-white transition-colors mt-auto"
-            >
-              <span className="md:hidden">Voir</span>
-              <span className="hidden md:inline">En savoir plus</span>
-              <Icons.ChevronRight className="w-3 h-3 md:w-4 md:h-4 ml-1" />
+            <div className="flex items-center justify-between w-full mt-auto">
+              <button 
+                onClick={toggleExpand}
+                className="md:hidden text-[10px] font-bold text-accent flex items-center"
+              >
+                {isExpanded ? 'Réduire' : 'En savoir plus'}
+                <Icons.ChevronRight className={`w-3 h-3 ml-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+              </button>
+              
+              <div 
+                className="flex items-center text-xs md:text-sm font-bold text-primary dark:text-accent group-hover:text-accent dark:group-hover:text-white transition-colors"
+              >
+                <span className="hidden md:inline">Voir détails</span>
+                <Icons.ChevronRight className="hidden md:inline w-3 h-3 md:w-4 md:h-4 ml-1" />
+              </div>
             </div>
           </div>
         </div>

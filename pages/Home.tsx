@@ -6,40 +6,42 @@ import { QuoteWizard } from '../components/QuoteWizard';
 import { InteractiveAreaMap } from '../components/InteractiveAreaMap';
 import { COMPANY_INFO } from '../types';
 import { Icons } from '../components/Icons';
+import { MobileHorizontalScroll } from '../components/MobileHorizontalScroll';
+import { ExpandableText } from '../components/ExpandableText';
 
 export const Home: React.FC = () => {
   const services = [
     {
-      id: 'maison-neuve',
-      title: 'Maison Neuve',
-      description: 'Construction intégrale de A à Z. Nous gérons terrassement, fondations, maçonnerie et finitions pour une maison moderne.',
-      icon: 'NewBuild',
-      features: ['RT 2020 / RE 2020', 'Gros œuvre maîtrisé', 'Finitions Premium'],
-      link: '/maison-neuve'
+      id: 'depannage',
+      title: 'Dépannage Rapide',
+      description: 'Fuite d\'eau, canalisation bouchée, panne de chauffe-eau. Intervention d\'urgence.',
+      icon: 'Wrench',
+      features: ['Recherche de fuite', 'Débouchage', 'Réparation immédiate'],
+      link: '/interventions'
     },
     {
-      id: 'renovation',
-      title: 'Rénovation',
-      description: 'Transformation complète de l’existant. Redistribution des pièces, isolation et mise aux normes.',
-      icon: 'Renovation',
-      features: ['Démolition soignée', 'Isolation haute perf.', 'Agencement sur-mesure'],
-      link: '/renovation'
+      id: 'salle-de-bain',
+      title: 'Salle de Bain',
+      description: 'Création et rénovation complète de votre salle de bain. Douche à l\'italienne, baignoire.',
+      icon: 'Droplet',
+      features: ['Clé en main', 'Carrelage & Faïence', 'PMR'],
+      link: '/gros-oeuvre'
     },
     {
-      id: 'photovoltaique',
-      title: 'Photovoltaïque',
-      description: 'Installation de panneaux solaires performants pour l’autoconsommation. Étude de rentabilité incluse.',
-      icon: 'Electric',
-      features: ['Autoconsommation', 'Pose intégrée', 'Raccordement'],
-      link: '/photovoltaique'
-    },
-    {
-      id: 'clim',
-      title: 'Climatisation / PAC',
-      description: 'Solutions de chauffage et refroidissement. Pompes à chaleur pour un confort thermique optimal.',
+      id: 'chauffage',
+      title: 'Chauffage',
+      description: 'Installation et remplacement de chaudière, radiateurs, plancher chauffant.',
       icon: 'HVAC',
-      features: ['Économies d\'énergie', 'Entretien inclus', 'Marques premium'],
-      link: '/climatisation'
+      features: ['Chaudière Gaz', 'Désembouage', 'Thermostats'],
+      link: '/gros-oeuvre'
+    },
+    {
+      id: 'plomberie',
+      title: 'Plomberie Générale',
+      description: 'Modification de réseaux, installation d\'adoucisseur, raccordement cuisine.',
+      icon: 'Settings',
+      features: ['Cuivre / PER / Multicouche', 'Adoucisseur', 'Rénovation'],
+      link: '/gros-oeuvre'
     }
   ];
 
@@ -48,68 +50,67 @@ export const Home: React.FC = () => {
       <HeroBlueprint />
       
       {/* Services Section */}
-      <section className="py-10 md:py-16 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
+      <section className="py-8 md:py-12 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-accent text-[10px] md:text-sm font-bold tracking-[0.2em] uppercase mb-2 md:mb-4">Nos Expertises</h2>
           <h3 className="font-display font-bold text-2xl md:text-4xl text-primary dark:text-white mb-6 md:mb-10">
-            Une exécution technique premium
+            Solutions Plomberie & Chauffage
           </h3>
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
+          <MobileHorizontalScroll className="lg:grid lg:grid-cols-4 lg:gap-8 lg:overflow-visible lg:pb-0">
             {services.map(service => (
-              <div key={service.id} className="h-full">
-                <ServiceCard service={service} />
-              </div>
+              <ServiceCard key={service.id} service={service} />
             ))}
-          </div>
+          </MobileHorizontalScroll>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-10 md:py-16 bg-white dark:bg-neutral-900 relative transition-colors duration-300">
+      <section className="py-8 md:py-12 bg-white dark:bg-neutral-900 relative transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
              <div className="relative group order-first lg:order-none">
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-neutral-800">
                   <img 
-                    src="https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                    alt="Mathieu Touron sur chantier" 
+                    src="https://storage.googleapis.com/novelec_assets/Serin_Plomberie/fixing-faucet-repair-professional-plumber-768x768.jpg" 
+                    alt="Plombier professionnel" 
                     className="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-6 md:p-8">
                      <div className="text-white">
-                        <p className="font-display font-bold text-lg md:text-xl">Mathieu Touron</p>
-                        <p className="text-accent text-xs md:text-sm font-medium">Fondateur TM BTP</p>
+                        <p className="font-display font-bold text-lg md:text-xl">{COMPANY_INFO.owner}</p>
+                        <p className="text-accent text-xs md:text-sm font-medium">Artisan Plombier</p>
                      </div>
                   </div>
                 </div>
-                <div className="absolute -top-4 -left-4 md:-top-6 md:-left-6 bg-accent text-primary p-4 md:p-6 rounded-xl shadow-lg hidden md:block">
-                  <p className="font-bold text-2xl md:text-3xl font-display">15+</p>
-                  <p className="text-[10px] font-bold uppercase tracking-wider">Ans d'expérience</p>
+                <div className="absolute -top-4 -left-4 md:-top-6 md:-left-6 bg-accent text-primary p-4 md:p-6 rounded-xl shadow-lg">
+                  <p className="font-bold text-2xl md:text-3xl font-display">24/7</p>
+                  <p className="text-[10px] font-bold uppercase tracking-wider">Dépannage</p>
                 </div>
              </div>
 
              <div className="order-last lg:order-none">
                 <h2 className="font-display font-bold text-2xl md:text-4xl text-primary dark:text-white mb-4 md:mb-6 leading-tight">
-                  L'exigence artisanale <br/> 
-                  <span className="text-accent">au service de votre habitat.</span>
+                  L'expertise artisanale <br/> 
+                  <span className="text-accent">au service de votre confort.</span>
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed mb-6">
-                  TM BTP est née d'une conviction : la construction ne doit pas être source de stress, mais l'accomplissement d'un projet de vie.
-                </p>
+                <ExpandableText 
+                  text={`${COMPANY_INFO.name} intervient pour tous vos besoins en plomberie et chauffage. De la petite fuite à la rénovation complète de salle de bain, nous garantissons un travail soigné et durable.`}
+                  className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed mb-6"
+                />
                 <div className="grid grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-8">
                   <div className="flex items-start">
                     <Icons.Shield className="w-5 h-5 md:w-6 md:h-6 text-accent mr-2 md:mr-3 mt-1" />
                     <div>
-                      <h4 className="font-bold text-primary dark:text-white text-sm md:text-base">Décennale</h4>
-                      <p className="text-[10px] md:text-sm text-gray-500">Protection totale.</p>
+                      <h4 className="font-bold text-primary dark:text-white text-sm md:text-base">Garantie Décennale</h4>
+                      <p className="text-[10px] md:text-sm text-gray-500">Travaux assurés.</p>
                     </div>
                   </div>
                   <div className="flex items-start">
                     <Icons.Check className="w-5 h-5 md:w-6 md:h-6 text-accent mr-2 md:mr-3 mt-1" />
                     <div>
-                      <h4 className="font-bold text-primary dark:text-white text-sm md:text-base">Maîtrise</h4>
-                      <p className="text-[10px] md:text-sm text-gray-500">Un seul expert.</p>
+                      <h4 className="font-bold text-primary dark:text-white text-sm md:text-base">Devis Gratuit</h4>
+                      <p className="text-[10px] md:text-sm text-gray-500">Transparence totale.</p>
                     </div>
                   </div>
                 </div>
@@ -119,16 +120,16 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Quote Section */}
-      <section className="py-10 md:py-16 bg-white dark:bg-neutral-900 transition-colors duration-300" id="devis">
+      <section className="py-8 md:py-12 bg-white dark:bg-neutral-900 transition-colors duration-300" id="devis">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div>
               <h2 className="font-display font-bold text-2xl md:text-4xl text-primary dark:text-white mb-4 md:mb-6 leading-tight">
-                Lancez votre projet <br/>
-                <span className="text-accent">en toute sérénité</span>
+                Besoin d'un plombier ? <br/>
+                <span className="text-accent">Contactez-nous</span>
               </h2>
               <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8">
-                Estimation gratuite et rendez-vous technique sous 48h.
+                Réponse rapide pour vos urgences et devis sous 48h pour vos projets.
               </p>
               <div className="space-y-4 md:space-y-6 bg-neutral-50 dark:bg-neutral-800 p-6 md:p-8 rounded-2xl border dark:border-neutral-700">
                 <a href={`tel:${COMPANY_INFO.phoneClean}`} className="flex items-center text-primary dark:text-white hover:text-accent transition-colors">
@@ -147,7 +148,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Compact Map Section */}
-      <section className="py-6 md:py-10 bg-neutral-50 dark:bg-neutral-950 overflow-hidden">
+      <section className="py-4 md:py-8 bg-neutral-50 dark:bg-neutral-950 overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="inline-block mb-4">
              <h2 className="font-display font-bold text-lg md:text-xl text-primary dark:text-white flex items-center justify-center gap-2">
@@ -159,7 +160,7 @@ export const Home: React.FC = () => {
           <div className="rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-neutral-800">
             <InteractiveAreaMap />
           </div>
-          <p className="mt-4 text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Interventions prioritaires : Tarbes — Toulouse — Montauban</p>
+          <p className="mt-4 text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Interventions : {COMPANY_INFO.zone}</p>
         </div>
       </section>
     </div>

@@ -13,6 +13,8 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronLeft,
+  Star,
   ShieldCheck,
   HardHat,
   Smartphone,
@@ -23,7 +25,10 @@ import {
   BarChart3,
   Leaf,
   Plus,
-  Minus
+  Minus,
+  Wrench,
+  Droplet,
+  Settings
 } from 'lucide-react';
 
 export const Icons = {
@@ -40,6 +45,8 @@ export const Icons = {
   Menu: Menu,
   Close: X,
   ChevronRight: ChevronRight,
+  ChevronLeft: ChevronLeft,
+  Star: Star,
   Shield: ShieldCheck,
   HardHat: HardHat,
   Mobile: Smartphone,
@@ -50,5 +57,9 @@ export const Icons = {
   Chart: BarChart3,
   Eco: Leaf,
   Plus: Plus,
-  Minus: Minus
+  Minus: Minus,
+  Wrench: Wrench,
+  Droplet: Droplet,
+  Settings: Settings,
+  Hammer: Hammer
 };

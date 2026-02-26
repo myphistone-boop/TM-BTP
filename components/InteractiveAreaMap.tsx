@@ -27,18 +27,20 @@ export const InteractiveAreaMap: React.FC = () => {
   useEffect(() => {
     if (!mapContainerRef.current || !window.L) return;
 
-    // Center on Toulouse
-    const toulouse: [number, number] = [43.6047, 1.4442];
-    const tarbes: [number, number] = [43.2333, 0.0833];
-    const montauban: [number, number] = [44.0167, 1.35];
+    // Center on Hérault (Clermont-l'Hérault approx)
+    const center: [number, number] = [43.62, 3.43];
+    const montpellier: [number, number] = [43.6108, 3.8767];
+    const beziers: [number, number] = [43.3442, 3.2158];
+    const millau: [number, number] = [44.0983, 3.0783];
+    const laPezade: [number, number] = [43.92, 3.25];
 
     // Detect theme
     const isDarkMode = document.documentElement.classList.contains('dark');
 
     // Initialize Map
     mapInstanceRef.current = window.L.map(mapContainerRef.current, {
-      center: toulouse,
-      zoom: 8,
+      center: center,
+      zoom: 9,
       zoomControl: false,
       scrollWheelZoom: false,
       dragging: !window.L.Browser.mobile,
@@ -65,15 +67,17 @@ export const InteractiveAreaMap: React.FC = () => {
     });
 
     // Add Markers
-    window.L.marker(tarbes, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">TM BTP Tarbes</b>');
-    window.L.marker(montauban, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">TM BTP Montauban</b>');
+    window.L.marker(montpellier, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">Montpellier</b>');
+    window.L.marker(beziers, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">Béziers</b>');
+    window.L.marker(millau, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">Millau</b>');
+    window.L.marker(laPezade, { icon: customIcon }).addTo(mapInstanceRef.current).bindPopup('<b class="text-primary">La Pezade (Limite)</b>');
 
     // Service Area Circle
-    window.L.circle(toulouse, {
+    window.L.circle(center, {
       color: '#C9A227',
       fillColor: '#C9A227',
       fillOpacity: 0.1,
-      radius: 85000, // 85km radius
+      radius: 65000, // 65km radius
       weight: 2,
       dashArray: '5, 10'
     }).addTo(mapInstanceRef.current);
@@ -132,7 +136,7 @@ export const InteractiveAreaMap: React.FC = () => {
       <div className="absolute bottom-4 left-4 z-[1000] pointer-events-none">
         <div className="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-gray-200 dark:border-neutral-700 shadow-lg flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-            <span className="text-[10px] font-bold text-primary dark:text-white uppercase tracking-wider">Zone Sud-Ouest : Rayon 85km autour de Toulouse</span>
+            <span className="text-[10px] font-bold text-primary dark:text-white uppercase tracking-wider">Zone : Hérault (34) - Limite La Pezade</span>
         </div>
       </div>
     </div>

@@ -4,11 +4,10 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { StickyMobileBar } from './components/StickyMobileBar';
 import { Home } from './pages/Home';
-import { Realizations } from './pages/Realizations';
-import { MaisonNeuve } from './pages/MaisonNeuve';
-import { Renovation } from './pages/Renovation';
-import { Photovoltaique } from './pages/Photovoltaique';
-import { Climatisation } from './pages/Climatisation';
+import { Interventions } from './pages/Interventions';
+import { GrosOeuvre } from './pages/GrosOeuvre';
+import { About } from './pages/About';
+import { Reviews } from './pages/Reviews';
 import { QuoteWizard } from './components/QuoteWizard';
 
 const ScrollToTop = () => {
@@ -38,11 +37,10 @@ const App: React.FC = () => {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/maison-neuve" element={<MaisonNeuve />} />
-            <Route path="/renovation" element={<Renovation />} />
-            <Route path="/photovoltaique" element={<Photovoltaique />} />
-            <Route path="/climatisation" element={<Climatisation />} />
-            <Route path="/realisations" element={<Realizations />} />
+            <Route path="/interventions" element={<Interventions />} />
+            <Route path="/gros-oeuvre" element={<GrosOeuvre />} />
+            <Route path="/a-propos" element={<About />} />
+            <Route path="/avis" element={<Reviews />} />
             <Route path="/devis" element={
               <div className="pt-32 pb-20 px-4">
                 <div className="text-center mb-12">

@@ -43,11 +43,10 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'Accueil', path: '/' },
-    { name: 'Maison Neuve', path: '/maison-neuve' },
-    { name: 'Rénovation', path: '/renovation' },
-    { name: 'Solaire', path: '/photovoltaique' },
-    { name: 'Climatisation', path: '/climatisation' },
-    { name: 'Réalisations', path: '/realisations' },
+    { name: 'Interventions', path: '/interventions' },
+    { name: 'Gros Œuvre', path: '/gros-oeuvre' },
+    { name: 'Avis', path: '/avis' },
+    { name: 'À Propos', path: '/a-propos' },
   ];
 
   const closeMenu = () => setIsMobileMenuOpen(false);
@@ -61,10 +60,16 @@ export const Navbar: React.FC = () => {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-[padding,box-shadow] duration-300 ${navbarClasses}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link to="/" className="group" onClick={closeMenu}>
+          <Link to="/" className="group flex items-center gap-3" onClick={closeMenu}>
+            <img 
+              src={COMPANY_INFO.logo} 
+              alt={COMPANY_INFO.name} 
+              className="h-12 w-auto object-contain"
+              referrerPolicy="no-referrer"
+            />
             <div className="flex flex-col">
-              <span className="font-display font-bold text-2xl tracking-tight text-primary dark:text-white">TM BTP</span>
-              <span className="text-[10px] tracking-[0.2em] text-accent uppercase font-medium">Expertise Premium</span>
+              <span className="font-display font-bold text-xl tracking-tight text-primary dark:text-white leading-none">{COMPANY_INFO.name}</span>
+              <span className="text-[8px] tracking-[0.2em] text-accent uppercase font-medium mt-1">Plomberie & Chauffage</span>
             </div>
           </Link>
 
@@ -105,7 +110,15 @@ export const Navbar: React.FC = () => {
       {/* Fullscreen Mobile Menu */}
       <div className={`fixed inset-0 bg-white dark:bg-neutral-950 z-[60] transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden flex flex-col`}>
         <div className="flex items-center justify-between px-6 py-4 border-b dark:border-neutral-800">
-          <span className="font-display font-bold text-2xl text-primary dark:text-white">TM BTP</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src={COMPANY_INFO.logo} 
+              alt={COMPANY_INFO.name} 
+              className="h-10 w-auto object-contain"
+              referrerPolicy="no-referrer"
+            />
+            <span className="font-display font-bold text-xl text-primary dark:text-white">{COMPANY_INFO.name}</span>
+          </div>
           <button onClick={closeMenu} className="p-2 rounded-full bg-gray-100 dark:bg-neutral-800 text-primary dark:text-white">
             <Icons.Close size={24} />
           </button>
