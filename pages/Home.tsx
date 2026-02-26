@@ -14,7 +14,7 @@ export const Home: React.FC = () => {
     {
       id: 'depannage',
       title: 'Dépannage Rapide',
-      description: 'Fuite d\'eau, canalisation bouchée, panne de chauffe-eau. Intervention d\'urgence.',
+      description: 'Fuite d\'eau, canalisation bouchée, panne de chauffe-eau. Intervention rapide et efficace.',
       icon: 'Wrench',
       features: ['Recherche de fuite', 'Débouchage', 'Réparation immédiate'],
       link: '/interventions'
@@ -129,7 +129,7 @@ export const Home: React.FC = () => {
                 <span className="text-accent">Contactez-nous</span>
               </h2>
               <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8">
-                Réponse rapide pour vos urgences et devis sous 48h pour vos projets.
+                Réponse rapide pour vos besoins urgents et devis sous 48h pour vos projets.
               </p>
               <div className="space-y-4 md:space-y-6 bg-neutral-50 dark:bg-neutral-800 p-6 md:p-8 rounded-2xl border dark:border-neutral-700">
                 <a href={`tel:${COMPANY_INFO.phoneClean}`} className="flex items-center text-primary dark:text-white hover:text-accent transition-colors">

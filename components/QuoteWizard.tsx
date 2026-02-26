@@ -28,7 +28,7 @@ export const QuoteWizard: React.FC = () => {
   };
 
   const categories = [
-    { id: 'urgent', title: 'Intervention Urgente', icon: Icons.Wrench, desc: "Dépannage immédiat (fuite, bouchon...)" },
+    { id: 'urgent', title: 'Intervention Rapide', icon: Icons.Wrench, desc: "Dépannage rapide et efficace (fuite, bouchon...)" },
     { id: 'gros_oeuvre', title: 'Projet Gros Œuvre', icon: Icons.Hammer, desc: "Rénovation, salle de bain, chauffage" },
   ];
 
@@ -47,7 +47,7 @@ export const QuoteWizard: React.FC = () => {
     { type: "Canalisation bouchée", icon: Icons.Settings },
     { type: "Panne chauffe-eau", icon: Icons.HVAC },
     { type: "Problème WC", icon: Icons.Check },
-    { type: "Autre urgence", icon: Icons.Plus },
+    { type: "Autre intervention rapide", icon: Icons.Plus },
   ];
 
   const urgentSpecs: Record<string, { label: string, options: { id: string, label: string, price: string, delay: string }[] }> = {
@@ -79,10 +79,10 @@ export const QuoteWizard: React.FC = () => {
         { id: 'fuite_sol', label: "Fuite au sol / Réservoir cassé", price: "110€ - 160€", delay: "Moins de 2h" },
       ]
     },
-    "Autre urgence": {
-      label: "Précisez l'urgence",
+    "Autre intervention rapide": {
+      label: "Précisez votre besoin",
       options: [
-        { id: 'standard', label: "Urgence standard", price: "90€ - 150€", delay: "Moins de 3h" },
+        { id: 'standard', label: "Intervention standard", price: "90€ - 150€", delay: "Moins de 3h" },
       ]
     }
   };
@@ -101,8 +101,8 @@ export const QuoteWizard: React.FC = () => {
 - Détails: ${formData.details}`;
   };
 
-  const whatsappLink = `https://wa.me/${COMPANY_INFO.phoneClean.replace('+', '')}?text=${encodeURIComponent(generateMessage())}`;
   const mailtoLink = `mailto:${COMPANY_INFO.email}?subject=Demande de devis - ${formData.name}&body=${encodeURIComponent(generateMessage())}`;
+  const smsLink = `sms:${COMPANY_INFO.phoneClean}?body=${encodeURIComponent(generateMessage())}`;
 
   return (
     <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-gray-100 dark:border-neutral-800 overflow-hidden max-w-4xl mx-auto transition-colors duration-300">
@@ -229,7 +229,7 @@ export const QuoteWizard: React.FC = () => {
 
         {step === 2 && category === 'urgent' && (
           <div className="animate-fade-in">
-            <h2 className="text-2xl font-display font-bold text-primary dark:text-white mb-2">Quelle est l'urgence ?</h2>
+            <h2 className="text-2xl font-display font-bold text-primary dark:text-white mb-2">Quel est votre besoin ?</h2>
             <p className="text-gray-500 dark:text-gray-400 mb-8">Sélectionnez le type de problème.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {urgentTypes.map((ut) => (
@@ -402,13 +402,11 @@ export const QuoteWizard: React.FC = () => {
                 Envoyer par Email
               </a>
               <a 
-                href={whatsappLink}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-[#25D366] text-white rounded-xl font-bold hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl"
+                href={smsLink}
+                className="inline-flex items-center justify-center px-8 py-4 bg-accent text-primary rounded-xl font-bold hover:bg-white transition-all shadow-lg hover:shadow-xl"
               >
                 <Icons.Mobile className="mr-2 w-5 h-5" />
-                Via WhatsApp
+                Envoyer par Téléphone
               </a>
             </div>
             <p className="mt-6 text-xs text-gray-400">
@@ -445,13 +443,11 @@ export const QuoteWizard: React.FC = () => {
                 Envoyer par Email
               </a>
               <a 
-                href={whatsappLink}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-[#25D366] text-white rounded-xl font-bold hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl"
+                href={smsLink}
+                className="inline-flex items-center justify-center px-8 py-4 bg-accent text-primary rounded-xl font-bold hover:bg-white transition-all shadow-lg hover:shadow-xl"
               >
                 <Icons.Mobile className="mr-2 w-5 h-5" />
-                Via WhatsApp
+                Envoyer par Téléphone
               </a>
             </div>
             <p className="mt-6 text-xs text-gray-400">

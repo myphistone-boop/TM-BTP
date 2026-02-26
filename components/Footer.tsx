@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
                 <span>7j/7 — 24h/24</span>
               </div>
               <div className="mt-4 pt-4 border-t border-white/10 text-xs text-accent font-bold">
-                Intervention d'urgence garantie.
+                Intervention rapide et efficace garantie.
               </div>
             </div>
           </div>

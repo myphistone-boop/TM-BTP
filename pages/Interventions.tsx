@@ -96,9 +96,9 @@ export const Interventions: React.FC = () => {
        {/* Urgency Banner */}
        <section className="py-10 md:py-12 bg-primary dark:bg-neutral-900 text-white transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="font-display font-bold text-3xl mb-6">Une urgence plomberie ?</h2>
+          <h2 className="font-display font-bold text-3xl mb-6">Besoin d'une intervention rapide ?</h2>
           <p className="text-lg text-gray-200 mb-8">
-            Ne laissez pas une fuite ou un bouchon s'aggraver. Contactez-nous pour une intervention rapide.
+            Ne laissez pas une fuite ou un bouchon s'aggraver. Contactez-nous pour une intervention rapide et efficace.
           </p>
           <a 
             href={`tel:${COMPANY_INFO.phoneClean}`}
@@ -115,7 +115,7 @@ export const Interventions: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4">
             <div className="text-center mb-12">
                 <h2 className="font-display font-bold text-3xl text-primary dark:text-white">Demande d'intervention tout type</h2>
-                <p className="text-gray-600 dark:text-gray-400 mt-2">Pour les travaux planifiés, urgences ou devis, utilisez ce formulaire.</p>
+                <p className="text-gray-600 dark:text-gray-400 mt-2">Pour les travaux planifiés, interventions rapides ou devis, utilisez ce formulaire.</p>
             </div>
           <QuoteWizard />
         </div>
